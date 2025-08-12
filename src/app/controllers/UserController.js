@@ -7,7 +7,7 @@ class UserController {
     const schema = Yup.object({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
-      phone: Yup.string().required().min(10).max(11),
+      number_phone: Yup.string().required().min(10).max(11),
       cnpj: Yup.string().required(),
       enterpriseName: Yup.string().required(),
       password: Yup.string().required().min(6),
@@ -26,14 +26,14 @@ class UserController {
       return res.status(400).json({ error: "User already exists." });
     }
 
-    const { name, email, phone, cnpj, enterpriseName, password, admin } =
+    const { name, email, number_phone, cnpj, enterpriseName, password, admin } =
       req.body;
 
     const user = await User.create({
       id: v4(),
       name,
-      phone,
       email,
+      number_phone,
       cnpj,
       enterpriseName,
       password,
@@ -44,7 +44,7 @@ class UserController {
       id: user.id,
       name,
       email,
-      phone,
+      number_phone,
       cnpj,
       enterpriseName,
       admin,

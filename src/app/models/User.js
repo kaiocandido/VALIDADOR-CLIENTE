@@ -5,16 +5,46 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelize.STRING,
-        email: Sequelize.STRING,
-        cnpj: Sequelize.STRING,
-        enterpriseName: Sequelize.STRING,
+        name: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        email: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          unique: true,
+          validate: {
+            isEmail: true,
+          },
+        },
+        cnpj: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        number_phone: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        enterpriseName: {
+          type: Sequelize.STRING,
+          allowNull: false,
+          field: "enterprise_name", // map para coluna correta
+        },
         password: Sequelize.VIRTUAL,
-        password_hash: Sequelize.STRING,
-        admin: Sequelize.BOOLEAN,
+        password_hash: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        admin: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+        },
       },
       {
         sequelize,
+        tableName: "users",
+        timestamps: true,
+        underscored: true,
       },
     );
 

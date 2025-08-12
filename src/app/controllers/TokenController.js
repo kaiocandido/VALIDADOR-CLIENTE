@@ -82,7 +82,7 @@ class TokenController {
           id: user.id,
           name: user.name,
           email: user.email,
-          phone: user.phone,
+          number_phone: user.number_phone,
           cnpj: user.cnpj,
           enterpriseName: user.enterpriseName,
         },

@@ -17,10 +17,6 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      number_phone: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       cnpj: {
         type: Sequelize.STRING,
         allowNull: false,
