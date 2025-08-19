@@ -7,9 +7,9 @@ import authMiddleware from "./app/middlawares/authMiddleware";
 
 const routes = new Router();
 
-// Login (só admin autenticado)
+// Cadastro de usuário
 routes.post("/users", UserController.store);
-// Login (só admin autenticado)
+// Login
 routes.post("/sessions", SessionsController.store);
 
 // Gera chave (sem autenticação)

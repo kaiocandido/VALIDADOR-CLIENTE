@@ -1,5 +1,6 @@
 import { v4 } from "uuid";
 import * as Yup from "yup";
+import bcrypt from "bcrypt";
 import User from "../models/User";
 
 class UserController {
@@ -21,13 +22,15 @@ class UserController {
     }
 
     const userExists = await User.findOne({ where: { email: req.body.email } });
-
     if (userExists) {
       return res.status(400).json({ error: "User already exists." });
     }
 
     const { name, email, number_phone, cnpj, enterpriseName, password, admin } =
       req.body;
+
+    // Aqui geramos o hash da senha
+    const password_hash = await bcrypt.hash(password, 10); // 10 rounds de salt
 
     const user = await User.create({
       id: v4(),
@@ -36,7 +39,7 @@ class UserController {
       number_phone,
       cnpj,
       enterpriseName,
-      password,
+      password_hash, // salva o hash, não a senha
       admin,
     });
 
