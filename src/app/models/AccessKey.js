@@ -6,7 +6,7 @@ class AccessKey extends Model {
       {
         key: Sequelize.STRING,
         expires_at: Sequelize.DATE,
-        user_id: Sequelize.UUID, // referência ao usuário
+        user_id: Sequelize.UUID,
       },
       {
         sequelize,

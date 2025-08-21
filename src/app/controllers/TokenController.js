@@ -6,14 +6,14 @@ import User from "../models/User";
 
 // Configura a API Key do SendGrid
 sgMail.setApiKey(
-  "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"
+  "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",
 );
 
 // Função para gerar chave de 7 letras
 function generateKey(length = 7) {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   let key = "";
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i += 1) {
     key += letters.charAt(Math.floor(Math.random() * letters.length));
   }
   return key;
@@ -64,7 +64,10 @@ class TokenController {
         await sgMail.send(msg);
         console.log(`Chave enviada por e-mail para ${user.email}`);
       } catch (err) {
-        console.error("Erro ao enviar e-mail:", err.response?.body || err.message);
+        console.error(
+          "Erro ao enviar e-mail:",
+          err.response?.body || err.message,
+        );
       }
 
       return res.status(201).json({

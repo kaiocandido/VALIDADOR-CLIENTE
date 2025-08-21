@@ -1,9 +1,79 @@
 import { v4 } from "uuid";
 import * as Yup from "yup";
 import bcrypt from "bcrypt";
+import { Op } from "sequelize";
 import User from "../models/User";
 
 class UserController {
+  async index(req, res) {
+    try {
+      const {
+        search = "",
+        page = 1,
+        limit = 10,
+        orderBy = "created_at",
+        order = "DESC",
+      } = req.query;
+
+      // validações simples de ordenação
+      const allowedOrderBy = ["created_at", "updated_at", "name", "email"];
+      const safeOrderBy = allowedOrderBy.includes(orderBy)
+        ? orderBy
+        : "created_at";
+      const safeOrder = String(order).toUpperCase() === "ASC" ? "ASC" : "DESC";
+
+      const pageNum = Math.max(parseInt(page, 10) || 1, 1);
+      const limitNum = Math.min(Math.max(parseInt(limit, 10) || 10, 1), 100);
+      const offset = (pageNum - 1) * limitNum;
+
+      const where = {};
+      if (search) {
+        const term = `%${search}%`;
+        where[Op.or] = [
+          { name: { [Op.iLike]: term } },
+          { email: { [Op.iLike]: term } },
+          { cnpj: { [Op.iLike]: term } },
+          { number_phone: { [Op.iLike]: term } },
+          { enterprise_name: { [Op.iLike]: term } },
+        ];
+      }
+
+      const { rows, count } = await User.findAndCountAll({
+        where,
+        limit: limitNum,
+        offset,
+        order: [[safeOrderBy, safeOrder]],
+        attributes: [
+          "id",
+          "name",
+          "email",
+          "cnpj",
+          "number_phone",
+          ["enterprise_name", "enterpriseName"],
+          "admin",
+          "created_at",
+          "updated_at",
+        ],
+      });
+
+      return res.json({
+        data: rows,
+        meta: {
+          page: pageNum,
+          limit: limitNum,
+          total: count,
+          totalPages: Math.max(Math.ceil(count / limitNum), 1),
+          orderBy: safeOrderBy,
+          order: safeOrder,
+          search,
+        },
+      });
+    } catch (err) {
+      console.error("Erro ao listar usuários:", err);
+      return res.status(500).json({ error: "Erro ao listar usuários." });
+    }
+  }
+
   async store(req, res) {
     const schema = Yup.object({
       name: Yup.string().required(),
@@ -29,8 +99,7 @@ class UserController {
     const { name, email, number_phone, cnpj, enterpriseName, password, admin } =
       req.body;
 
-    // Aqui geramos o hash da senha
-    const password_hash = await bcrypt.hash(password, 10); // 10 rounds de salt
+    const password_hash = await bcrypt.hash(password, 10);
 
     const user = await User.create({
       id: v4(),
@@ -39,7 +108,7 @@ class UserController {
       number_phone,
       cnpj,
       enterpriseName,
-      password_hash, // salva o hash, não a senha
+      password_hash,
       admin,
     });
 

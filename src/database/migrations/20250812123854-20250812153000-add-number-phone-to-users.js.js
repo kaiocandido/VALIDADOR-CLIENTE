@@ -4,7 +4,7 @@ module.exports = {
     await queryInterface.addColumn("users", "number_phone", {
       type: Sequelize.STRING,
       allowNull: false,
-      defaultValue: "", // valor padrão para registros já existentes
+      defaultValue: "",
     });
   },
 

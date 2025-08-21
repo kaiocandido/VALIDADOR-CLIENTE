@@ -1,11 +1,9 @@
-import express from "express";
-import routes from "./routes";
 import "./database";
 import cors from "cors";
-/*
-Esse código cria um servidor Express, conecta ao banco de dados, configura middlewares para entender JSON e registra as rotas da API, 
-exportando o servidor pronto para ser usado.
-*/
+
+import express from "express";
+import routes from "./routes";
+
 class App {
   constructor() {
     // Instância do servidor Express

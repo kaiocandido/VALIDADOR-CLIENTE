@@ -28,7 +28,7 @@ class User extends Model {
         enterpriseName: {
           type: Sequelize.STRING,
           allowNull: false,
-          field: "enterprise_name", // map para coluna correta
+          field: "enterprise_name",
         },
         password: Sequelize.VIRTUAL,
         password_hash: {

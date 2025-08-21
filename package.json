@@ -1,24 +1,24 @@
 {
   "name": "jwt-desk-api",
   "version": "1.0.0",
-  "main": "/src/server.js",
+  "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon -r sucrase/register src/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
-  "keywords": [],
   "author": "Kaio",
   "license": "ISC",
   "description": "MFA DESK",
   "dependencies": {
     "@sendgrid/mail": "^8.1.5",
     "bcrypt": "^6.0.0",
-    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "jwt": "^0.2.0",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7",
@@ -26,13 +26,13 @@
     "yup": "^1.7.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^17.21.3",
     "eslint-plugin-prettier": "^5.5.4",
-    "globals": "^16.3.0",
+    "eslint-plugin-unused-imports": "^4.2.0",
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "sequelize-cli": "^6.6.3",
