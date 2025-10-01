@@ -1,5 +1,4 @@
-
-# README - Backend (`VALIDADOR-BLOCKBIT`)
+Backend (`VALIDADOR-BLOCKBIT`)
 
 ## 📌 Sobre
 API de validação de clientes com geração/validação de tokens via e-mail, estatísticas para dashboard e histórico de tentativas.  
@@ -178,3 +177,4 @@ npm run dev
 - **CORS**: habilite `cors()` no `app.js`.
 - **SendGrid**: verifique `SENDGRID_API_KEY` e `SENDGRID_FROM` verificado no painel.
 - **UUID**: se gerar no DB, habilite `uuid-ossp` ou `pgcrypto` e use `Sequelize.literal('uuid_generate_v4()')`/`gen_random_uuid()` nas migrations.
+
